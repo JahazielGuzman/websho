@@ -10,17 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_18_160548) do
+ActiveRecord::Schema.define(version: 2019_09_24_191207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actors", force: :cascade do |t|
     t.string "name"
-    t.string "birthday"
-    t.string "bio"
     t.string "image"
-    t.boolean "alive"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -43,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_09_18_160548) do
     t.string "production"
     t.float "rating"
     t.integer "popularity"
+    t.string "trailer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -50,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_09_18_160548) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "name"
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
