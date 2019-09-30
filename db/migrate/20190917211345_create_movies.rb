@@ -10,6 +10,7 @@ class CreateMovies < ActiveRecord::Migration[5.2]
       t.float :rating
       t.integer :popularity
       t.string :trailer
+      t.string :genre
 
       t.timestamps
     end

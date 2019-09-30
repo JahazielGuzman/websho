@@ -72,7 +72,7 @@ movie_ids = all_movies.map{|m| m["id"]}
 # create a movie object for each movie in the array
 all_movies.each do |m|
   trailer = Tmdb::Movie.trailers(m["id"])
-  sleep(2)
+  sleep(5)
   if trailer["youtube"] != nil && trailer["youtube"] != []
     Movie.create(
       title: m["original_title"],
@@ -83,7 +83,8 @@ all_movies.each do |m|
       production: m["production_companies"].first,
       rating: m["vote_average"] / 2,
       popularity: m["popularity"],
-      trailer: trailer["youtube"][0]["source"]
+      trailer: trailer["youtube"][0]["source"],
+      genre: m["genres"][0]["name"]
     )
   end
 end

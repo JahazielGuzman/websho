@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_09_24_191207) do
     t.float "rating"
     t.integer "popularity"
     t.string "trailer"
+    t.string "genre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
