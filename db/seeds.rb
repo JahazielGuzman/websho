@@ -12,7 +12,8 @@ require 'pry'
 Tmdb::Api.key(ENV['tmdb_api_key'])
 movies = []
 actors = []
-image_path = "https://image.tmdb.org/t/p/original"
+backdrop_path = "https://image.tmdb.org/t/p/original"
+poster_path = "https://image.tmdb.org/t/p/w500"
 
 # ============================
 # Start Helper Methods
@@ -44,14 +45,7 @@ end
 # Start Creation of Movies
 # ============================
 
-
-# get movies in theatres, top rated and upcoming movies.
-in_theatres = Tmdb::Movie.now_playing
-top_rated = Tmdb::Movie.top_rated
-upcoming = Tmdb::Movie.upcoming
-
 # join them all together then make sure we don't have duplicated and get the deets for each
-all_movies = in_theatres + top_rated + upcoming
 all_movies = all_movies.uniq{|m| m.id}
 
 sleep(30)
@@ -74,10 +68,14 @@ sleep(30)
 for g in genres do
   genre_detail = Tmdb::Genre.detail(g["id"])
   num_pages = genre_detail.total_pages < 10 ? genre_detail.total_pages : 10
-  all_movies.concat(genre_detail.results)
+  results = genre_detail.results
+  results = results.each{ |r| r["genres"] = [{"name" => g["name"]}] }
+  all_movies.concat(results)
   for i in 2...num_pages do
-    sleep(1)
-    all_movies.concat(genre_detail.get_page(i).results)
+    sleep(5)
+    results = genre_detail.get_page(i).results
+    results = results.each{ |r| r["genres"] = [{"name" => g["name"]}] }
+    all_movies.concat(results)
   end
 end
 
@@ -99,8 +97,8 @@ all_movies.each do |m|
       title: m["original_title"],
       overview: m["overview"],
       release: m["release_date"],
-      poster: "#{image_path}#{m['poster_path']}",
-      backdrop: "#{image_path}#{m["backdrop_path"]}",
+      poster: "#{poster_path}#{m['poster_path']}",
+      backdrop: "#{backdrop_path}#{m["backdrop_path"]}",
       production: "",
       rating: m["vote_average"] / 2,
       popularity: m["popularity"],
