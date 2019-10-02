@@ -12,7 +12,12 @@ class ApplicationController < ActionController::API
     auth_token = request.headers["Authorization"]
     # decode the token to get the user id
     decoded_token = JWT.decode(auth_token, ENV['token_secret'], true, { algorithm: 'HS256' })[0]
-    User.find(decoded_token["user_id"])
+    user = User.find(decoded_token["user_id"])
+  end
+
+  def establish_session
+    user = decode_token_return_user
+    render json: {user: {id: user.id, name: user.name, username: user.username}}
   end
 
   def signup
