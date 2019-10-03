@@ -12,6 +12,7 @@ require 'pry'
 Tmdb::Api.key(ENV['tmdb_api_key'])
 movies = []
 actors = []
+all_movies = []
 backdrop_path = "https://image.tmdb.org/t/p/original"
 poster_path = "https://image.tmdb.org/t/p/w500"
 
@@ -31,7 +32,7 @@ def createActorAndCast(person, movie_id)
   image_path = "https://image.tmdb.org/t/p/original"
   created_actor = Actor.create(
     name: person["name"],
-    image: "#{image_path}#{person["profile_path"]}",
+    image: "#{image_path}#{person["profile_path"]}"
   )
   Cast.create(movie_id: movie_id, actor: created_actor)
 end
@@ -46,10 +47,10 @@ end
 # ============================
 
 # join them all together then make sure we don't have duplicated and get the deets for each
-all_movies = all_movies.uniq{|m| m.id}
+# all_movies = all_movies.uniq{|m| m.id}
 
 sleep(30)
-all_movies = all_movies.map{|m| Tmdb::Movie.detail(m.id)}.select{|m| !m["status_code"]}
+# all_movies = all_movies.map{|m| Tmdb::Movie.detail(m.id)}.select{|m| !m["status_code"]}
 
 # randomly select movie id's to get details for and load them into all_movies array
 # movie_ids = (300000..470000).to_a.shuffle
@@ -69,12 +70,12 @@ for g in genres do
   genre_detail = Tmdb::Genre.detail(g["id"])
   num_pages = genre_detail.total_pages < 10 ? genre_detail.total_pages : 10
   results = genre_detail.results
-  results = results.each{ |r| r["genres"] = [{"name" => g["name"]}] }
+  results = results.each{ |r| r["genres"] = [{"name" => genre_detail.name}] }
   all_movies.concat(results)
   for i in 2...num_pages do
-    sleep(5)
+    sleep(2)
     results = genre_detail.get_page(i).results
-    results = results.each{ |r| r["genres"] = [{"name" => g["name"]}] }
+    results = results.each{ |r| r["genres"] = [{"name" => genre_detail.name}] }
     all_movies.concat(results)
   end
 end
@@ -86,13 +87,14 @@ movie_ids = all_movies.map{|m| m["id"]}
 sleep(30)
 # create a movie object for each movie in the array
 all_movies.each do |m|
-  trailer = Tmdb::Movie.trailers(m["id"])
-
-  if trailer["youtube"] != nil && trailer["youtube"] != []
-    trailer = trailer["youtube"][0]["source"]
-  else
-    trailer = "b9434BoGkNQ"
-  end
+  # trailer = Tmdb::Movie.trailers(m["id"])
+  #
+  # if trailer["youtube"] != nil && trailer["youtube"] != []
+  #   trailer = trailer["youtube"][0]["source"]
+  # else
+  #   trailer = "b9434BoGkNQ"
+  # end
+  if m["backdrop_path"] != nil || m["backdrop_path"] != ""
     Movie.create(
       title: m["original_title"],
       overview: m["overview"],
@@ -102,9 +104,11 @@ all_movies.each do |m|
       production: "",
       rating: m["vote_average"] / 2,
       popularity: m["popularity"],
-      trailer: trailer,
-      genre: m["genres"] == [] ? m["genres"][0]["name"] : genres.sample["name"]
+      trailer: "",
+      original_id: m["id"],
+      genre: m["genres"][0]["name"]
     )
+  end
 end
 
 # ============================

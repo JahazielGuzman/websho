@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   post '/signup', to: 'application#signup'
   post '/login', to: 'application#login'
   post '/viewings', to: "viewings#create"
+  post '/search_movies', to: 'movies#search_movies'
 end

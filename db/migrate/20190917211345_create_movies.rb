@@ -11,6 +11,7 @@ class CreateMovies < ActiveRecord::Migration[5.2]
       t.integer :popularity
       t.string :trailer
       t.string :genre
+      t.integer :original_id
 
       t.timestamps
     end
