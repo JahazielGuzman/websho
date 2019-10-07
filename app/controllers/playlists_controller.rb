@@ -98,7 +98,7 @@ class PlaylistsController < ApplicationController
 
   def recently_viewed
     user = decode_token_return_user
-    {cat: "Recently Viewed" , movies: user.movies.order(created_at: :desc).limit(20)}
+    {cat: "Recently Viewed" , movies: user.viewings.order(created_at: :desc).limit(20).map{|v| v.movie}}
   end
 
   def user_custom_movies
