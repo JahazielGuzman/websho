@@ -21,6 +21,7 @@ class PlaylistsController < ApplicationController
 
 
   def newest_releases
+
     {cat: "Newest Releases", movies: Movie.order(release: :desc).limit(40)}
   end
 
@@ -93,6 +94,7 @@ class PlaylistsController < ApplicationController
 
 
   def movies_always_show
+
      render json: [newest_releases(), * movies_by_genre()]
   end
 
@@ -102,7 +104,12 @@ class PlaylistsController < ApplicationController
   end
 
   def user_custom_movies
-    render json: [recently_viewed(), * movies_by_past()]
+    recent = recently_viewed()
+    if recent[:movies].length > 0
+      render json: [recent, * movies_by_past()]
+    else
+      render json: movies_by_past()
+    end
   end
 
 end
