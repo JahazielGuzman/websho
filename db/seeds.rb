@@ -94,7 +94,7 @@ all_movies.each do |m|
   # else
   #   trailer = "b9434BoGkNQ"
   # end
-  if m["backdrop_path"] != nil || m["backdrop_path"] != ""
+  if m["backdrop_path"] != nil && m["backdrop_path"] != "" && m["release_date"] != nil && m["poster_path"] != nil
     Movie.create(
       title: m["original_title"],
       overview: m["overview"],
