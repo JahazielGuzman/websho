@@ -68,12 +68,13 @@ sleep(30)
 
 for g in genres do
   genre_detail = Tmdb::Genre.detail(g["id"])
-  num_pages = genre_detail.total_pages < 10 ? genre_detail.total_pages : 10
+  max_pages = 7
+  num_pages = genre_detail.total_pages < max_pages ? genre_detail.total_pages : max_pages
   results = genre_detail.results
   results = results.each{ |r| r["genres"] = [{"name" => genre_detail.name}] }
   all_movies.concat(results)
   for i in 2...num_pages do
-    sleep(2)
+    sleep(1)
     results = genre_detail.get_page(i).results
     results = results.each{ |r| r["genres"] = [{"name" => genre_detail.name}] }
     all_movies.concat(results)
