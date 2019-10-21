@@ -65,7 +65,7 @@ class PlaylistsController < ApplicationController
       for movie in in_genre[i][:movies] # for movie m1, m2, m3 ... in G[i]
 
         for word in title_words
-          if movie.title.include? word
+          if (movie.title.include? word) && word.downcase != "the"
             titles_match = true
             break
           end
