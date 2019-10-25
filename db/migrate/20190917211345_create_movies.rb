@@ -6,10 +6,8 @@ class CreateMovies < ActiveRecord::Migration[5.2]
       t.string :release
       t.string :poster
       t.string :backdrop
-      t.string :production
       t.float :rating
       t.integer :popularity
-      t.string :trailer
       t.string :genre
       t.integer :original_id
 

@@ -102,10 +102,8 @@ all_movies.each do |m|
       release: m["release_date"],
       poster: "#{poster_path}#{m['poster_path']}",
       backdrop: "#{backdrop_path}#{m["backdrop_path"]}",
-      production: "",
       rating: m["vote_average"] / 2,
       popularity: m["popularity"],
-      trailer: "",
       original_id: m["id"],
       genre: m["genres"][0]["name"]
     )
@@ -115,34 +113,3 @@ end
 # ============================
 # End Creation of Movies
 # ============================
-
-
-# ============================
-# Start Creation of Actors
-# ============================
-
-mov_i = 1
-movie_ids.each do |movie|
-
-  cast = Tmdb::Movie.casts(movie)
-  if cast != nil && cast != []
-
-    cast[0...3].each do |actor|
-      actors << [actor, mov_i]
-    end
-  end
-  mov_i += 1
-end
-
-actorsq = actors.uniq{|a| a[0]["name"]}
-actors.each{|a| createActorAndCast(a[0], a[1])}
-
-
-# ============================
-# End Creation of Actors
-# ============================
-
-
-# bm_deets = Tmdb::Movie.details(bm.id)
-# bm_cast = Tmdb::Movie.casts(bm.id)
-# bm_trailers = Tmdb::Movie.trailers(bm.id)
