@@ -7,7 +7,7 @@ NOTE: You can also stream trailers of movies.
 
 This repository is for the Rails backend, visit [here](https://github.com/JahazielGuzman/websho-frontend) for the front-end code base
 
-[Click here for the hosted app.](websho.jahazielguzman.com) Rails app was deployed to Heroku.
+[Click here for the hosted app.](http://websho.jahazielguzman.com) Rails app was deployed to Heroku.
 
 This project was created in Rails, React and Postgres.
 
