@@ -3,7 +3,7 @@
 Websho is a movie streaming app which customizes its selection to the users viewing history.
 Choose from a catalog of 1000+ movies from more than 10 genres. You can also browse movies more easily by using the search functionality. 
 
-NOTE: You can also stream trailers of movies.
+NOTE: You can only stream trailers of movies.
 
 This repository is for the Rails backend, visit [here](https://github.com/JahazielGuzman/websho-frontend) for the front-end code base
 
