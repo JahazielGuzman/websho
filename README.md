@@ -18,18 +18,27 @@ Some of the techniques used to create this app:
 + Generated search results based on movie search queries.
 + Used the react-youtube npm package to stream youtube trailers fetched from TheMovieDB.
 
-To run this project do the following:
+### How to run
 
-Navigate to the folder where the project is contained and run
+1. cd to project directory
 
-`bundle install`
+2. `bundle install`
 
-`rails db:create`
+3. `rails db:create`
 
-`rails db:migrate`
+4. `rails db:migrate`
 
-`rails db:seed`
+5. `rails db:seed`
 
 and finally
 
-`rails s`
+6. `rails s`
+
+### Built With
+* Ruby on Rails
+* React.js
+* react-youtube npm package
+* PostgreSQL
+* JSON Web Tokens
+* ActiveRecord
+* TheMovieDB Gem
